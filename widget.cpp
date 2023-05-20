@@ -35,7 +35,8 @@ Widget::Widget(QWidget *parent)
 
           worker_.test1();
           QThread::currentThread()->sleep(1);
-          worker_.test2();
+          worker_.test2(QRandomGenerator::global()->bounded(1, 100));
+          worker_.Add(1, 2);
         });
         f.then([]{qDebug() << "Ok.";});
     });
@@ -77,12 +78,21 @@ void Widget::test1()
     tEdit_->append(__FUNCTION__);
 }
 
-void Widget::test2()
+void Widget::test2(int num)
 {
     if (current_thread_id_  != QThread::currentThreadId()) {
-        return (void)QMetaObject::invokeMethod(this, "test2");
+        return (void)QMetaObject::invokeMethod(this, "test2", Q_ARG(int, num));
     }
     qDebug() << __FUNCTION__ << QThread::currentThreadId();
-    tEdit_->append(__FUNCTION__);
+    tEdit_->append(QString("%1:%2").arg(__FUNCTION__).arg(num));
+}
+
+void Widget::Add(int num1, int num2)
+{
+    if (current_thread_id_ != QThread::currentThreadId()) {
+        return (void)QMetaObject::invokeMethod(this, "Add", Q_ARG(int, num1), Q_ARG(int, num2));
+    }
+    qDebug() << __FUNCTION__ << QThread::currentThreadId();
+    tEdit_->append(QString("%1+%2=%3").arg(num1).arg(num2).arg(num1+num2));
 }
 

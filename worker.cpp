@@ -1,17 +1,7 @@
 #include "worker.h"
 
-#include <QTimer>
-#include <QThread>
-#include <QDebug>
-
 Worker::Worker(Delegate *delegate) :  delegate_(delegate)
 {
-//    QTimer::singleShot(3000, [=]{
-//        qDebug() << "worker thread id:" << QThread::currentThreadId();
-//        this->test1();
-//        QThread::currentThread()->sleep(1);
-//        this->test2();
-//    });
 }
 
 void Worker::DetachDegelate()
@@ -26,8 +16,14 @@ void Worker::test1()
         delegate_->test1();
 }
 
-void Worker::test2()
+void Worker::test2(int num)
 {
     if (delegate_)
-        delegate_->test2();
+        delegate_->test2(num);
+}
+
+void Worker::Add(int num1, int num2)
+{
+    if (delegate_)
+        delegate_->Add(num1, num2);
 }

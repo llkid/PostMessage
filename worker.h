@@ -10,7 +10,8 @@ public:
     class Delegate {
     public:
         virtual void test1()=0;
-        virtual void test2()=0;
+        virtual void test2(int num)=0;
+        virtual void Add(int num1, int num2)=0;
 
     protected:
         ~Delegate() = default;
@@ -22,7 +23,8 @@ public:
     void DetachDegelate();
 
     void test1();
-    void test2();
+    void test2(int num);
+    void Add(int num1, int num2);
 
 protected:
     Worker();

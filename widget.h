@@ -23,8 +23,12 @@ public:
 
     static Widget* GetInstance();
 
-    Q_INVOKABLE virtual void test1() override;
-    Q_INVOKABLE virtual void test2() override;
+    Q_INVOKABLE virtual
+    void test1() override;
+    Q_INVOKABLE virtual
+    void test2(int num) override;
+    Q_INVOKABLE virtual
+    void Add(int num1, int num2) override;
 
 private:
     Ui::Form* ui_;
