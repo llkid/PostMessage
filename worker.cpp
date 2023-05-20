@@ -27,3 +27,9 @@ void Worker::Add(int num1, int num2)
     if (delegate_)
         delegate_->Add(num1, num2);
 }
+
+void Worker::test3(data_info info)
+{
+    if (delegate_)
+        delegate_->test3(info);
+}

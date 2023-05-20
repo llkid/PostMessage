@@ -29,6 +29,8 @@ public:
     void test2(int num) override;
     Q_INVOKABLE virtual
     void Add(int num1, int num2) override;
+    Q_INVOKABLE virtual
+    void test3(data_info info) override;
 
 private:
     Ui::Form* ui_;

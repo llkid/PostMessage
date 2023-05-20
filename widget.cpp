@@ -11,6 +11,8 @@
 
 Q_GLOBAL_STATIC(Widget, g_instance);
 
+#define CHECK_AND_CALL()
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent),
       worker_(this),
@@ -37,6 +39,7 @@ Widget::Widget(QWidget *parent)
           QThread::currentThread()->sleep(1);
           worker_.test2(QRandomGenerator::global()->bounded(1, 100));
           worker_.Add(1, 2);
+          worker_.test3({1, "test3"});
         });
         f.then([]{qDebug() << "Ok.";});
     });
@@ -94,5 +97,15 @@ void Widget::Add(int num1, int num2)
     }
     qDebug() << __FUNCTION__ << QThread::currentThreadId();
     tEdit_->append(QString("%1+%2=%3").arg(num1).arg(num2).arg(num1+num2));
+}
+
+void Widget::test3(data_info info)
+{
+    qRegisterMetaType<data_info>("data_info");
+    if (current_thread_id_ != QThread::currentThreadId()) {
+        return (void)QMetaObject::invokeMethod(this, "test3", Qt::QueuedConnection, Q_ARG(data_info, info));
+    }
+    qDebug() << __FUNCTION__ << QThread::currentThreadId();
+    tEdit_->append(QString("id:%1,name:%2").arg(info.id).arg(info.name));
 }
 

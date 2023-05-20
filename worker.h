@@ -3,6 +3,11 @@
 
 #include <QObject>
 
+struct data_info {
+    int id;
+    QString name;
+};
+
 class Worker : public QObject
 {
     Q_OBJECT
@@ -12,6 +17,7 @@ public:
         virtual void test1()=0;
         virtual void test2(int num)=0;
         virtual void Add(int num1, int num2)=0;
+        virtual void test3(data_info info)=0;
 
     protected:
         ~Delegate() = default;
@@ -25,6 +31,7 @@ public:
     void test1();
     void test2(int num);
     void Add(int num1, int num2);
+    void test3(data_info info);
 
 protected:
     Worker();
